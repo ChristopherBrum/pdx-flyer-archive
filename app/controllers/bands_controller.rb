@@ -15,6 +15,12 @@ class BandsController < ApplicationController
     @bands ||= Band.all
   end
 
+  def search
+    query = params[:q].to_s.downcase
+    @bands = Band.where("LOWER(name) LIKE ?", "%#{query}%").limit(10)
+    render json: @bands
+  end
+
   private
 
   def show_params

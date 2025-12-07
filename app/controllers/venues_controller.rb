@@ -15,6 +15,12 @@ class VenuesController < ApplicationController
     @venues ||= Venue.all
   end
 
+  def search
+    query = params[:q].to_s.downcase
+    @venues = Venue.where("LOWER(name) LIKE ?", "%#{query}%").limit(10)
+    render json: @venues
+  end
+
   private
 
   def show_params
