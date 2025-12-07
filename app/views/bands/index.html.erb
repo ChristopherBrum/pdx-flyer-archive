@@ -1,0 +1,76 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-bold">Bands</h1>
+
+    <%= link_to new_band_path, class: "btn btn-primary" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a 1 1 0 110 2h-5v5a 1 1 0 11-2 0v-5H4a 1 1 0 110-2h5V4a 1 1 0 011-1z" clip-rule="evenodd" />
+      </svg>
+      New Band
+    <% end %>
+  </div>
+
+  <% if @bands.empty? %>
+    <div class="hero bg-base-200 rounded-box">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h2 class="text-2xl font-bold">No bands yet</h2>
+          <p class="py-6">Add your first band to begin building your archive.</p>
+          <%= link_to "Add First Band", new_band_path, class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @bands.each do |band| %>
+        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
+          <div class="card-body">
+            <h2 class="card-title">
+              <%= band.name %>
+            </h2>
+
+            <% if band.website.present? %>
+              <div class="text-sm mt-2">
+                <%= link_to band.website, band.website, 
+                    class: "link link-primary", target: "_blank" %>
+              </div>
+            <% end %>
+
+            <%# if band.description.present? %>
+              <p class="text-base-content/70 text-sm mt-2">
+                <%#= truncate(band.description, length: 120) %>
+              </p>
+            <%# end %>
+
+            <% if band.flyers.any? %>
+              <div class="mt-3">
+                <p class="text-xs text-base-content/60">Appears on:</p>
+                <div class="flex flex-wrap gap-1 mt-1">
+                  <% band.flyers.limit(5).each do |flyer| %>
+                    <%= link_to flyer.title, flyer_path(flyer),
+                        class: "badge badge-outline hover:badge-primary" %>
+                  <% end %>
+
+                  <% if band.flyers.count > 5 %>
+                    <span class="badge badge-outline">
+                      + <%= band.flyers.count - 5 %> more
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+            <div class="card-actions justify-end mt-4">
+              <%= link_to "View", band_path(band), class: "btn btn-sm btn-primary" %>
+              <%#= link_to "Edit", edit_band_path(band), class: "btn btn-sm btn-ghost" %>
+              <%= button_to "Delete", band_path(band),
+                    method: :delete,
+                    data: { turbo_confirm: "Are you sure?" },
+                    class: "btn btn-sm btn-ghost text-error" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

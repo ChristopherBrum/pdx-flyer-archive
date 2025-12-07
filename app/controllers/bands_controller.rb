@@ -8,5 +8,16 @@ class BandsController < ApplicationController
   end
 
   def show
+    @band ||= Band.find(show_params[:id])
+  end
+
+  def index
+    @bands ||= Band.all
+  end
+
+  private
+
+  def show_params
+    params.permit(:id)
   end
 end

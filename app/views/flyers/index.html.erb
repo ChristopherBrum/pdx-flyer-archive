@@ -72,7 +72,7 @@
                   <div class="flex flex-wrap gap-1">
                     <% flyer.bands.each do |band| %>
                       <% if band.website.present? %>
-                        <%= link_to band.name, band.website, target: "_blank", class: "badge badge-outline hover:badge-primary" %>
+                        <%= link_to band.name, band, class: "badge badge-outline hover:badge-primary" %>
                       <% else %>
                         <span class="badge badge-outline"><%= band.name %></span>
                       <% end %>
