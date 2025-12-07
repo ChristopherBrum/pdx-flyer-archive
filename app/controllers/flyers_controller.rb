@@ -10,6 +10,10 @@ class FlyersController < ApplicationController
   def show
   end
 
+  def edit
+  end
+
   def index
+    @flyers = Flyer.all
   end
 end

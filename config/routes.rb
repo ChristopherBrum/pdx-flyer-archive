@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   root "flyers#index"
 
-  resources :flyers, only: [ :new, :create, :show ]
+  resources :flyers, only: [ :new, :create, :show, :index, :edit ]
   resources :bands, only: [ :new, :create, :show ]
   resources :venues, only: [ :new, :create, :show ]
 end
