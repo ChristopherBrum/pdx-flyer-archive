@@ -1,0 +1,43 @@
+<div class="navbar bg-base-100 shadow-lg sticky top-0 z-50">
+  <div class="navbar-start">
+    <%= link_to root_path, class: "btn btn-ghost text-xl normal-case" do %>
+      PDX Flyer Archive
+    <% end %>
+  </div>
+
+  <div class="navbar-center hidden lg:flex">
+    <div class="form-control">
+      <input type="text" placeholder="Search flyers..." class="input input-bordered w-64" />
+    </div>
+  </div>
+
+  <div class="navbar-end">
+    <!-- Hamburger menu for mobile -->
+    <div class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </div>
+      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+        <li class="lg:hidden">
+          <div class="form-control p-2">
+            <input type="text" placeholder="Search..." class="input input-bordered input-sm w-full" />
+          </div>
+        </li>
+        <li><%= link_to "Flyers", flyers_path %></li>
+        <li><%= link_to "Bands", bands_path %></li>
+        <li><%= link_to "Venues", venues_path %></li>
+        <li><a class="btn btn-primary btn-sm mt-2">Login / Sign Up</a></li>
+      </ul>
+    </div>
+
+    <!-- Desktop menu -->
+    <ul class="menu menu-horizontal px-1 hidden lg:flex">
+      <li><%= link_to "Flyers", flyers_path %></li>
+      <li><%= link_to "Bands", bands_path %></li>
+      <li><%= link_to "Venues", venues_path %></li>
+      <li><a class="btn btn-primary btn-sm ml-2">Login / Sign Up</a></li>
+    </ul>
+  </div>
+</div>
