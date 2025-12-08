@@ -23,4 +23,13 @@ class Flyer < ApplicationRecord
   has_one_attached :image
 
   attr_accessor :venue_name
+
+  # Validate that an image is attached
+  validate :image_presence
+
+  private
+
+  def image_presence
+    errors.add(:image, "must be attached") unless image.attached?
+  end
 end
