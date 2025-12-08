@@ -16,7 +16,7 @@ class FlyersController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
+  end 
 
   def show
     @flyer ||= Flyer.find(show_params[:id])

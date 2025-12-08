@@ -1,4 +1,4 @@
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-8 max-w-4xl">
   <div class="flex justify-between items-center mb-8">
     <h1 class="text-4xl font-bold">Bands</h1>
 
@@ -21,56 +21,52 @@
       </div>
     </div>
   <% else %>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <% @bands.each do |band| %>
-        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
-          <div class="card-body">
-            <h2 class="card-title">
-              <%= band.name %>
-            </h2>
-
-            <% if band.website.present? %>
-              <div class="text-sm mt-2">
-                <%= link_to band.website, band.website, 
-                    class: "link link-primary", target: "_blank" %>
+    <div class="bg-base-100 rounded-lg shadow-lg">
+      <ul class="menu menu-lg w-full">
+        <% @bands.each do |band| %>
+          <li class="border-b border-base-200 last:border-b-0">
+            <div class="flex items-center justify-between py-4">
+              <div class="flex-1">
+                <%= link_to band_path(band), class: "flex flex-col items-start p-0 hover:bg-transparent" do %>
+                  <h2 class="text-lg font-semibold"><%= band.name %></h2>
+                  <div class="flex flex-wrap gap-2 mt-2 text-sm text-base-content/60">
+                    <% if band.city.present? %>
+                      <span class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <%= band.city %>, <%= band.state %>
+                      </span>
+                    <% end %>
+                    <% if band.flyers.any? %>
+                      <span class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                        </svg>
+                        <%= pluralize(band.flyers.count, 'flyer') %>
+                      </span>
+                    <% end %>
+                    <% if band.website.present? %>
+                      <span class="flex items-center gap-1">
+                        
+                        <%= link_to "Website", band.website, class: "link link-primary", target: "_blank", onclick: "event.stopPropagation()" %>
+                      </span>
+                    <% end %>
+                  </div>
+                <% end %>
               </div>
-            <% end %>
-
-            <%# if band.description.present? %>
-              <p class="text-base-content/70 text-sm mt-2">
-                <%#= truncate(band.description, length: 120) %>
-              </p>
-            <%# end %>
-
-            <% if band.flyers.any? %>
-              <div class="mt-3">
-                <p class="text-xs text-base-content/60">Appears on:</p>
-                <div class="flex flex-wrap gap-1 mt-1">
-                  <% band.flyers.limit(5).each do |flyer| %>
-                    <%= link_to flyer.title, flyer_path(flyer),
-                        class: "badge badge-outline hover:badge-primary" %>
-                  <% end %>
-
-                  <% if band.flyers.count > 5 %>
-                    <span class="badge badge-outline">
-                      + <%= band.flyers.count - 5 %> more
-                    </span>
-                  <% end %>
-                </div>
+              <div class="flex gap-2">
+                <%= link_to "View", band_path(band), class: "btn btn-sm btn-ghost" %>
+                <%= button_to "Delete", band_path(band),
+                      method: :delete,
+                      data: { turbo_confirm: "Are you sure you want to delete #{band.name}?" },
+                      class: "btn btn-sm btn-ghost text-error" %>
               </div>
-            <% end %>
-
-            <div class="card-actions justify-end mt-4">
-              <%= link_to "View", band_path(band), class: "btn btn-sm btn-primary" %>
-              <%#= link_to "Edit", edit_band_path(band), class: "btn btn-sm btn-ghost" %>
-              <%= button_to "Delete", band_path(band),
-                    method: :delete,
-                    data: { turbo_confirm: "Are you sure?" },
-                    class: "btn btn-sm btn-ghost text-error" %>
             </div>
-          </div>
-        </div>
-      <% end %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 </div>
