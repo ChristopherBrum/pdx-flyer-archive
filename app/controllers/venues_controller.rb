@@ -12,12 +12,12 @@ class VenuesController < ApplicationController
   end
 
   def index
-    @venues ||= Venue.all
+    @pagy, @venues = pagy(Venue.all)
   end
 
   private
 
   def show_params
     params.permit(:id)
-  end 
+  end
 end

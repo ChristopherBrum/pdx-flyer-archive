@@ -84,3 +84,27 @@
 .form-control {
   position: relative;
 }
+
+.pagy {
+  @apply flex space-x-2 font-semibold text-sm;
+}
+
+.pagy a:not(.gap) {
+  @apply block rounded-lg px-4 py-2 transition-colors;
+}
+
+.pagy a:not(.gap):not([href]) {
+  @apply bg-base-200 cursor-default;
+}
+
+.pagy a:not(.gap)[href] {
+  @apply bg-base-200 text-base-content hover:bg-primary hover:text-primary-content;
+}
+
+.pagy a:not(.gap).current {
+  @apply bg-primary text-primary-content shadow-md;
+}
+
+.pagy .gap {
+  @apply px-2 py-2;
+}
