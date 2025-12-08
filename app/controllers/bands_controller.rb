@@ -12,7 +12,7 @@ class BandsController < ApplicationController
   end
 
   def index
-    @bands ||= Band.all
+    @pagy, @bands = pagy(Band.all)
   end
 
   private

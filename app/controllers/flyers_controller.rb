@@ -16,7 +16,7 @@ class FlyersController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end 
+  end
 
   def show
     @flyer ||= Flyer.find(show_params[:id])
@@ -46,7 +46,7 @@ class FlyersController < ApplicationController
   end
 
   def index
-    @flyers ||= Flyer.all
+    @pagy, @flyers = pagy(Flyer.all)
   end
 
   private
