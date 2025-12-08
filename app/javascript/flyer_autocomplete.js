@@ -3,7 +3,7 @@ document.addEventListener("turbo:load", () => {
     inputId: "venue_search",
     resultsId: "venue_results",
     hiddenId: "venue_id",
-    searchUrl: "/venues/search"
+    searchUrl: "/api/venues"
   });
 
   setupBandAutocomplete();
@@ -90,7 +90,7 @@ function setupBandAutocomplete() {
       return;
     }
 
-    const resp = await fetch(`/bands/search?q=${encodeURIComponent(q)}`);
+    const resp = await fetch(`/api/bands?q=${encodeURIComponent(q)}`);
     const data = await resp.json();
 
     results.innerHTML = "";

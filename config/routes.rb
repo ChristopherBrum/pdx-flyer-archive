@@ -12,10 +12,12 @@ Rails.application.routes.draw do
   root "flyers#index"
 
   resources :flyers
-  resources :bands do
-    get :search, on: :collection
-  end
-  resources :venues do
-    get :search, on: :collection
+  resources :bands
+  resources :venues
+
+  # API namespace for JSON endpoints
+  namespace :api do
+    resources :bands, only: [:index]
+    resources :venues, only: [:index]
   end
 end
