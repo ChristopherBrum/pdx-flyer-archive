@@ -1,0 +1,111 @@
+<div class="container mx-auto px-4 py-8 max-w-2xl">
+  <%= form_with(model: flyer, local: true, html: { multipart: true, class: "space-y-6" }) do |f| %>
+
+    <% if flyer.errors.any? %>
+      <div class="alert alert-error">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <div>
+          <h3 class="font-bold"><%= pluralize(flyer.errors.count, "error") %> prohibited this flyer from being saved:</h3>
+          <ul class="list-disc list-inside">
+            <% flyer.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- VENUE INPUT -->
+    <div class="form-control">
+      <%= f.label :venue, class: "label" do %>
+        <span class="label-text font-semibold">Venue</span>
+      <% end %>
+      <input
+        type="text"
+        id="venue_search"
+        name="venue_search"
+        autocomplete="off"
+        placeholder="Search for venue or create new..."
+        value="<%= flyer.venue&.name %>"
+        class="input input-bordered w-full"
+      >
+      <input type="hidden" name="flyer[venue_id]" id="venue_id" value="<%= flyer.venue_id %>">
+      <div id="venue_results" class="autocomplete-results"></div>
+    </div>
+
+    <!-- BANDS INPUT -->
+    <div class="form-control">
+      <%= f.label :bands, class: "label" do %>
+        <span class="label-text font-semibold">Bands</span>
+      <% end %>
+      <input
+        type="text"
+        id="band_search"
+        name="band_search"
+        autocomplete="off"
+        placeholder="Search for bands or create new..."
+        class="input input-bordered w-full"
+      >
+      <input type="hidden" name="band_ids_json" id="band_ids_json" value="<%= flyer.bands.to_json(only: [:id, :name]) %>">
+      <div id="band_results" class="autocomplete-results"></div>
+
+      <div id="selected_bands" class="flex flex-wrap gap-2 mt-3">
+        <% flyer.bands.each do |band| %>
+          <div class="badge badge-lg badge-primary gap-2" data-band-id="<%= band.id %>">
+            <%= band.name %>
+            <button type="button" class="remove-band">×</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- STANDARD FIELDS -->
+    <div class="form-control">
+      <%= f.label :title, class: "label" do %>
+        <span class="label-text font-semibold">Title</span>
+      <% end %>
+      <%= f.text_field :title, class: "input input-bordered w-full" %>
+    </div>
+
+    <div class="form-control">
+      <%= f.label :event_date, class: "label" do %>
+        <span class="label-text font-semibold">Event Date</span>
+      <% end %>
+      <%= f.date_field :event_date, class: "input input-bordered w-full" %>
+    </div>
+
+    <div class="form-control">
+      <%= f.label :notes, class: "label" do %>
+        <span class="label-text font-semibold">Notes</span>
+      <% end %>
+      <%= f.text_area :notes, rows: 4, class: "textarea textarea-bordered w-full" %>
+    </div>
+
+    <!-- IMAGE UPLOAD -->
+    <% if f.object.respond_to?(:image) %>
+      <div class="form-control">
+        <%= f.label :image, class: "label" do %>
+          <span class="label-text font-semibold">Flyer Image <span class="text-error">*</span></span>
+        <% end %>
+        <%= f.file_field :image, accept: "image/*", class: "file-input file-input-bordered w-full #{'file-input-error' if flyer.errors[:image].any?}" %>
+        <% if flyer.errors[:image].any? %>
+          <label class="label">
+            <span class="label-text-alt text-error"><%= flyer.errors[:image].first %></span>
+          </label>
+        <% end %>
+        <% if f.object.image.attached? %>
+          <div class="mt-4">
+            <%= image_tag f.object.image.variant(resize_to_limit: [300, 300]), class: "rounded-lg shadow-md" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <!-- ACTIONS -->
+    <div class="flex gap-3 pt-4">
+      <%= f.submit class: "btn btn-primary" %>
+      <%= link_to "Cancel", flyers_path, class: "btn btn-ghost" %>
+    </div>
+
+  <% end %>
+</div>

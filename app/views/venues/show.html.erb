@@ -1,0 +1,27 @@
+<div class="container mx-auto px-4 py-8">
+  <%= link_to "← Back to Venues", venues_path, class: "link" %>
+
+  <div class="card bg-base-100 shadow-xl mt-6 p-6">
+    <h1 class="text-4xl font-bold mb-4"><%= @venue.name %></h1>
+
+    <div class="opacity-80">
+      <% if @venue.city.present? %>
+        <p><strong>Location:</strong> <%= @venue.city %>, <%= @venue.state %>, <%= @venue.country %></p>
+      <% end %>
+    </div>
+
+    <div class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Flyers at <%= @venue.name %></h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        <% @venue.flyers.each do |flyer| %>
+          <%= link_to flyer_path(flyer) do %>
+            <div class="card bg-base-200 p-4 hover:bg-base-300 transition">
+              <h3 class="font-semibold"><%= flyer.title %></h3>
+              <p class="text-sm opacity-70"><%= flyer.event_date %></p>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

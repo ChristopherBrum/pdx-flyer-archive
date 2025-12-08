@@ -19,4 +19,17 @@ class Flyer < ApplicationRecord
   belongs_to :venue
   has_many :band_flyers, dependent: :destroy
   has_many :bands, through: :band_flyers
+
+  has_one_attached :image
+
+  attr_accessor :venue_name
+
+  # Validate that an image is attached
+  validate :image_presence
+
+  private
+
+  def image_presence
+    errors.add(:image, "must be attached") unless image.attached?
+  end
 end
