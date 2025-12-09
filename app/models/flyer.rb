@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: flyers
@@ -25,6 +27,21 @@ class Flyer < ApplicationRecord
   attr_accessor :venue_name
 
   validate :image_presence
+
+  scope :search_by_title, ->(query) {
+    where("LOWER(title) LIKE ?", "%#{query.to_s.downcase}%")
+      .order(
+        Arel.sql("
+          CASE
+            WHEN LOWER(title) = '#{sanitize_sql_like(query.to_s.downcase)}' THEN 1
+            WHEN LOWER(title) LIKE '#{sanitize_sql_like(query.to_s.downcase)}%' THEN 2
+            ELSE 3
+          END,
+          title
+        ")
+      )
+      .limit(10)
+  }
 
   # Assign venue from either ID or name
   def assign_venue_from_params(venue_id, venue_name)

@@ -4,5 +4,11 @@
 
 import { application } from "./application"
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import BandAutocompleteController from "./band_autocomplete_controller"
+application.register("band-autocomplete", BandAutocompleteController)
+
+import GlobalSearchController from "./global_search_controller"
+application.register("global-search", GlobalSearchController)
+
+import VenueAutocompleteController from "./venue_autocomplete_controller"
+application.register("venue-autocomplete", VenueAutocompleteController)

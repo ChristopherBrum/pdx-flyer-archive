@@ -94,15 +94,15 @@
 }
 
 .pagy a:not(.gap):not([href]) {
-  @apply bg-base-200 cursor-default;
+  @apply bg-gray-200 cursor-default;
 }
 
 .pagy a:not(.gap)[href] {
-  @apply bg-base-200 text-base-content hover:bg-primary hover:text-primary-content;
+  @apply bg-gray-200 text-gray-700 hover:bg-blue-600 hover:text-white;
 }
 
 .pagy a:not(.gap).current {
-  @apply bg-primary text-primary-content shadow-md;
+  @apply bg-blue-600 text-white shadow-md;
 }
 
 .pagy .gap {

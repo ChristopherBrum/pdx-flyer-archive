@@ -6,8 +6,22 @@
   </div>
 
   <div class="navbar-center hidden lg:flex">
-    <div class="form-control">
-      <input type="text" placeholder="Search flyers..." class="input input-bordered w-64" />
+    <div class="form-control relative"
+          data-controller="global-search"
+          data-global-search-url-value="/api/search"
+          data-action="click@window->global-search#hide">
+      <input
+        type="text"
+        placeholder="Search by band or venue..."
+        class="input input-bordered w-96"
+        autocomplete="off"
+        data-global-search-target="input"
+        data-action="input->global-search#search focus->global-search#showIfHasResults"
+      />
+      <div
+        data-global-search-target="results"
+        class="absolute top-full mt-2 w-full bg-base-100 shadow-xl rounded-box max-h-96 overflow-y-auto hidden z-50"
+      ></div>
     </div>
   </div>
 
@@ -21,8 +35,22 @@
       </div>
       <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
         <li class="lg:hidden">
-          <div class="form-control p-2">
-            <input type="text" placeholder="Search..." class="input input-bordered input-sm w-full" />
+          <div class="form-control p-2 relative"
+                data-controller="global-search"
+                data-global-search-url-value="/api/search"
+                data-action="click@window->global-search#hide">
+            <input
+              type="text"
+              placeholder="Search..."
+              class="input input-bordered input-sm w-full"
+              autocomplete="off"
+              data-global-search-target="input"
+              data-action="input->global-search#search focus->global-search#showIfHasResults"
+            />
+            <div
+              data-global-search-target="results"
+              class="absolute top-full left-0 mt-2 w-full bg-base-100 shadow-xl rounded-box max-h-96 overflow-y-auto hidden z-50"
+            ></div>
           </div>
         </li>
         <li><%= link_to "Flyers", flyers_path %></li>
